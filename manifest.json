@@ -6,6 +6,7 @@
   "content_scripts":
 [
     {
+      "css": [ "style.css" ],
       "matches": ["https://*/*", "http://*/*"],
       "js": ["app.js"]
     }

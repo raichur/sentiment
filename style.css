@@ -1,0 +1,52 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+
+.sentiment-emotion {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  font-size: 3rem;
+  z-index: 9999999999;
+  position: fixed;
+  top: 80px;
+  right: 40px;
+  color: white;
+}
+.sentiment-logo {
+  cursor: pointer;
+  position: fixed;
+  margin-top: -15px;
+  margin-left: -70px;
+  -ms-transform: scale(0.7, 0.7); /* IE 9 */
+  -webkit-transform: scale(0.7, 0.7); /* Safari */
+  transform: scale(0.7, 0.7);
+}
+
+.sentiment {
+  color: white !important;
+  top: 65px;
+  right: 25px;
+  position: fixed;
+  background: #1d1d1d;
+  padding: 10px 30px 10px 30px;
+  width: 300px;
+  border-radius: 8px;
+  font-family: Open Sans;
+  height: 350px;
+  z-index: 999999;
+  overflow: scroll;
+}
+
+.sentiment h1 {
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+.sentiment h2 {
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+}
+
+.sentiment p {
+  margin-bottom: 20px;
+}
