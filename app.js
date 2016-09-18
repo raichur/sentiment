@@ -9,10 +9,10 @@
       api_call = "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet%2Creplies&videoId=" + video_id + "&key=AIzaSyAOHM5_WLRwseQD4V0jdH-BKsgUWEs951g",
       sum = 0, average = 0, average_percent = 0; top_happy = 0, top_sad = 0, standard_deviation = 0, res_with_comment = [], sorted_res = [];
 
-      $.getJSON(api_call, function(data) {
-        for(var i = 0; i < data.items.length; i++) {
-          comment_data.push(data.items[i].snippet.topLevelComment.snippet.textDisplay);
-        }
+      // $.getJSON(api_call, function(data) {
+      //   for(var i = 0; i < data.items.length; i++) {
+      //     comment_data.push(data.items[i].snippet.topLevelComment.snippet.textDisplay);
+      //   }
       //   $.post(
       //     'https://apiv2.indico.io/sentiment/batch',
       //     JSON.stringify({
@@ -23,12 +23,13 @@
       //     console.log(res);
       //     extract_data(res);
       //   });
+      // });
+
+      comment_data = ["and then tim cook took over and... well...<br /><br />&quot;I MISS STEVE!!!&quot; -tim cook﻿", "iphone satisfied my soul<br />iphone is the real smart phone!!!﻿", "He makes them clap while talking about the Internet capability. Commanding respect. The Internet was his purpose and inspiration.﻿", "<a href="http://www.youtube.com/watch?v=e7EfxMOElBE&amp;t=23m05s">23:05</a> The crowd goes crazy!!!!!!!﻿", "Did google maps break off or something at one point? Because now it&#39;s their own maps and google maps has to be downloaded separately﻿", "It&#39;s funny that it&#39;s 2016 and despite all the advancements in smartphones, hearing everyone&#39;s reactions to these things we take for granted now makes me feel like I&#39;m there and seeing this tech for the first time. I feel just as impressed as they are.﻿", "History right there﻿", "&quot;And boy have we patented that&quot;<br />He&#39;s so funny﻿", "Today it looks like a joke LOL﻿", "At <a href="http://www.youtube.com/watch?v=e7EfxMOElBE&amp;t=32m52s">32:52</a>, he said that something sized 3.5 inches is &quot;something wonderful in your hand&quot;.<br /><br />My girlfriend does not agree with this.﻿", "What is with the flanging effect with the audio?﻿", "I miss Steve 😞😭﻿", "As big as the iphone was, it was nothing at all compared to the ipod.﻿", "How many songs have been downloaded from iTunes by now, 2016?﻿", "classic﻿", "The audience is absolutely retarded for applauding after every 10 words.﻿", "New ios are shit full of bugs problems, I still have a old iphone with ios6 &amp; still faster than any ios up today + battery last duble the time.﻿", "FUCK MAC FUCK YOU I DONT WANT TO BUY13123213 MILLION APPLE SHIT JUST BECAUSE I OWN A FUCKING MAC﻿", "Revolutionary.<br /><br />Amazing to hear those gasps as Jobs slides around.﻿", "this is offencive to people that dont have fingers.﻿"];
+
       extract_data(res);
-      });
-
-
       // Just so I don't use up all my free API calls...
-      var res = '{"results": [0.4722667649, 0.9559210238, 0.6302089848, 0.9879938250000001, 0.0431922267, 0.2608765953, 0.4845619405, 0.053393425, 0.4063978549, 0.998675807, 0.8580738732000001, 0.25834819400000003, 0.2318515682, 0.9587285196, 0.8276647857, 0.38759054470000004, 0.5834167610000001, 0.8432266863000001, 0.9961713141, 0.0260976641]}';
+      // var res = '{"results": [0.4722667649, 0.9559210238, 0.6302089848, 0.9879938250000001, 0.0431922267, 0.2608765953, 0.4845619405, 0.053393425, 0.4063978549, 0.998675807, 0.8580738732000001, 0.25834819400000003, 0.2318515682, 0.9587285196, 0.8276647857, 0.38759054470000004, 0.5834167610000001, 0.8432266863000001, 0.9961713141, 0.0260976641]}';
 
       function extract_data(res) {
 
@@ -45,13 +46,19 @@
         function top_comments(){
             sorted_res = res_with_comment;
             sorted_res.sort(function(a,b) {
-              if (a < b) { return 1; }
-              else if (a == b) { return 0; }
-              else { return -1; }
+              var keyA = a.sentiment,
+              keyB = b.sentiment;
+          // Compare the 2 dates
+          if(keyA > keyB) return -1;
+          if(keyA < keyB) return 1;
+          return 0;
             });
-            top_happy = [sorted_res.results[0], sorted_res.results[1], sorted_res.results[2]];
-            top_sad = [sorted_res.results[sorted_res.results.length-3], sorted_res.results[sorted_res.results.length-2], sorted_res.results[sorted_res.results.length-1]];
+            top_happy = [sorted_res[0], sorted_res[1], sorted_res[2]];
+            top_sad = [sorted_res[sorted_res.length-1], sorted_res[sorted_res.length-2], sorted_res[sorted_res.length-3]];
+            top_neutral = [sorted_res[Math.floor(sorted_res.length/2)-1], sorted_res[Math.floor(sorted_res.length/2)], sorted_res[Math.floor(sorted_res.length/2)+1]];
         }
+
+        top_comments();
 
         var average = sum/the_res.results.length;
         var average_percent = Math.floor(average*100);
