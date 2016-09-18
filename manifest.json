@@ -1,19 +1,20 @@
 {
-    "name": "Sentiment",
-    "description": "DESCRIPTION",
-    "version": "0.1",
-    "permissions": [
-    "tabs","<all_urls>"
+  "name": "Sentiment",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "",
+  "background": {
+    "scripts": [
+      "background.js"
     ],
-    "content_scripts": [
-        {
-        "matches": [
-            "http://*/*",
-            "https://*/*"
-            ],
-        "js": ["app.js"],
-        "run_at": "document_end"
-        }
-    ],
-    "manifest_version":2
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "Sentiment"
+  },
+  "permissions": [
+    "https://*/*",
+    "http://*/*",
+    "tabs"
+  ]
 }
