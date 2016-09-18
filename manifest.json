@@ -1,0 +1,19 @@
+{
+    "name": "Sentiment",
+    "description": "DESCRIPTION",
+    "version": "0.1",
+    "permissions": [
+    "tabs","<all_urls>"
+    ],
+    "content_scripts": [
+        {
+        "matches": [
+            "http://*/*",
+            "https://*/*"
+            ],
+        "js": ["jquery.min.js", "app.js"],
+        "run_at": "document_end"
+        }
+    ],
+    "manifest_version":2
+}
