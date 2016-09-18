@@ -1,3 +1,5 @@
-chrome.tabs.executeScript(tab.ib, {
-	file: 'app.js'
+chrome.browserAction.onClicked.addListener(function (tab) {
+	chrome.tabs.executeScript(tab.ib, {
+		file: 'app.js'
+	});
 });
