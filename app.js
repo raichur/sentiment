@@ -14,21 +14,21 @@ function youtube() {
     for(var i = 0; i < data.items.length; i++) {
       comment_data.push(data.items[i].snippet.topLevelComment.snippet.textDisplay);
     }
-      // $.post(
-      //   'https://apiv2.indico.io/sentiment/batch',
-      //   JSON.stringify({
-      //     'api_key': "4709fc37d4510bb46c99dd5009a072f1",
-      //     'data': comment_data
-      //   })
-      // ).then(function(res) {
-      //   console.log(res);
-      //   extract_data(res);
-      // });
+      $.post(
+        'https://apiv2.indico.io/sentiment/batch',
+        JSON.stringify({
+          'api_key': "4709fc37d4510bb46c99dd5009a072f1",
+          'data': comment_data
+        })
+      ).then(function(res) {
+        console.log(res);
+        extract_data(res);
+      });
     extract_data(res);
   });
 
   // Just so I don't use up all my free API calls...
-  var res = '{"results": [0.4722667649, 0.9559210238, 0.6302089848, 0.9879938250000001, 0.0431922267, 0.2608765953, 0.4845619405, 0.053393425, 0.4063978549, 0.998675807, 0.8580738732000001, 0.25834819400000003, 0.2318515682, 0.9587285196, 0.8276647857, 0.38759054470000004, 0.5834167610000001, 0.8432266863000001, 0.9961713141, 0.0260976641]}';
+  // var res = '{"results": [0.4722667649, 0.9559210238, 0.6302089848, 0.9879938250000001, 0.0431922267, 0.2608765953, 0.4845619405, 0.053393425, 0.4063978549, 0.998675807, 0.8580738732000001, 0.25834819400000003, 0.2318515682, 0.9587285196, 0.8276647857, 0.38759054470000004, 0.5834167610000001, 0.8432266863000001, 0.9961713141, 0.0260976641]}';
 
   function extract_data(res) {
 
@@ -74,11 +74,11 @@ function youtube() {
       html += "<div class='sentiment-emotion'>" + emoticon + "</div>";
       html += '<progress max="100" value="' + average_percent + '"></progress>';
       html += "<h1>" + average_percent + "%</h1>";
-      html += "<div class='top_comment'><h2>Positive:</h2>";
+      html += "<div class='top_comment'><h2>Top Positive Comment</h2>";
       html += "<p>" + top_happy[0].comment.toString() + "</p></div>";
-      html += "<div class='neutral_comment'><h2>Neutral:</h2>";
+      html += "<div class='neutral_comment'><h2>Top Neutral Comment</h2>";
       html += "<p>" + top_neutral[0].comment.toString() + "</p></div>";
-      html += "<div class='sad_comment'><h2>Negative:</h2>";
+      html += "<div class='sad_comment'><h2>Top Negative Comment</h2>";
       html += "<p>" + top_sad[0].comment.toString() + "</p></div>";
       $('#player').prepend(html);
       $('#yt-masthead-user').prepend(logo);
@@ -165,13 +165,11 @@ function disqus() {
   }
 }
 
-function toggleSentiment() {
-  $('.sentiment').fadeToggle();
-}
-
-$('.sentiment').click(function() {
-  toggleSentiment();
-});
+setTimeout(function() {
+  $('.sentiment').click(function() {
+    toggleSentiment();
+  });
+}, 5000);
 
 if(window.location.href.includes("youtube")) {
   youtube();
